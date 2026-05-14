@@ -1,0 +1,46 @@
+---
+---
+
+<section id="about" class="pt-24 pb-28 lg:pt-36 lg:pb-40 border-b border-[color:var(--color-line)]">
+  <div class="mx-auto max-w-5xl px-6 lg:px-10 text-center">
+    <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] mb-8">
+      Early-stage venture · Est. 1977
+    </p>
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05]">
+      We engage early,<br />wear well, and<br />stay for the long run.
+    </h1>
+    <p class="mt-10 mx-auto max-w-2xl text-lg leading-relaxed text-[color:var(--color-muted)]">
+      Lattice Capital partners with founders from idea through Series A. Our team
+      has built and operated category-defining companies, and we bring that
+      experience to every conversation — patient, contrarian, and conviction-led.
+    </p>
+    <div class="mt-12 flex items-center justify-center gap-4 text-sm">
+      <a
+        href="#portfolio"
+        class="inline-flex items-center px-5 py-2.5 rounded-full bg-[color:var(--color-ink)] text-white hover:opacity-90 transition"
+      >
+        See our portfolio
+      </a>
+      <a
+        href="#team"
+        class="inline-flex items-center px-5 py-2.5 rounded-full border border-[color:var(--color-line)] hover:bg-[color:var(--color-soft)] transition"
+      >
+        Meet the team
+      </a>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-6 lg:px-10 mt-24 grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-8 text-center">
+    {[
+      ["48", "Years investing"],
+      ["$5B+", "Assets under mgmt."],
+      ["230+", "Companies backed"],
+      ["72", "Exits to date"],
+    ].map(([n, l]) => (
+      <div>
+        <div class="text-3xl md:text-4xl font-medium tracking-tight">{n}</div>
+        <div class="mt-2 text-xs uppercase tracking-[0.18em] text-[color:var(--color-muted)]">{l}</div>
+      </div>
+    ))}
+  </div>
+</section>

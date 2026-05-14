@@ -1,0 +1,107 @@
+---
+import { companies, allCategories } from "../data/portfolio";
+
+const featured = companies.filter((c) => c.featured);
+const filters = ["All", "Acquired", "IPO", ...allCategories];
+---
+
+<section id="portfolio" class="py-24 lg:py-32 border-b border-[color:var(--color-line)]">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <div class="mb-14">
+      <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] mb-3">Portfolio</p>
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Select investments.</h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[color:var(--color-line)] border border-[color:var(--color-line)]">
+      {featured.map((c) => (
+        <div class="bg-white aspect-[3/2] flex items-center justify-center group hover:bg-[color:var(--color-soft)] transition">
+          <div class="text-center px-4">
+            <div class="text-xl font-medium tracking-tight">{c.name}</div>
+            {c.status !== "Active" && (
+              <div class="mt-1 text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
+                {c.status}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-20">
+      <div class="flex items-end justify-between mb-8 gap-6 flex-wrap">
+        <h3 class="text-2xl md:text-3xl font-medium tracking-tight">All companies</h3>
+        <div id="filters" class="flex flex-wrap gap-2">
+          {filters.map((f, i) => (
+            <button
+              type="button"
+              data-filter={f}
+              class={`px-3 py-1.5 text-xs rounded-full border transition ${
+                i === 0
+                  ? "bg-[color:var(--color-ink)] text-white border-[color:var(--color-ink)]"
+                  : "border-[color:var(--color-line)] hover:bg-[color:var(--color-soft)]"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ul id="company-list" class="divide-y divide-[color:var(--color-line)] border-y border-[color:var(--color-line)]">
+        {companies.map((c) => (
+          <li
+            class="company-row flex items-center justify-between py-4 text-sm"
+            data-status={c.status}
+            data-categories={c.categories.join(",")}
+          >
+            <div class="font-medium tracking-tight text-base">{c.name}</div>
+            <div class="flex items-center gap-2 text-[color:var(--color-muted)]">
+              {c.status !== "Active" && (
+                <span class="text-[10px] uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-[color:var(--color-soft)]">
+                  {c.status}
+                </span>
+              )}
+              {c.categories.map((cat) => (
+                <span class="text-xs">{cat}</span>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const buttons = document.querySelectorAll("#filters [data-filter]");
+    const rows = document.querySelectorAll("#company-list .company-row");
+    const active = "bg-[color:var(--color-ink)] text-white border-[color:var(--color-ink)]";
+    const inactive = "border-[color:var(--color-line)] hover:bg-[color:var(--color-soft)]";
+
+    function setActive(el) {
+      buttons.forEach((b) => {
+        b.classList.remove(...active.split(" "));
+        b.classList.add(...inactive.split(" "));
+      });
+      el.classList.remove(...inactive.split(" "));
+      el.classList.add(...active.split(" "));
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const f = btn.getAttribute("data-filter");
+        setActive(btn);
+        rows.forEach((row) => {
+          const status = row.getAttribute("data-status");
+          const cats = (row.getAttribute("data-categories") || "").split(",");
+          let show = false;
+          if (f === "All") show = true;
+          else if (f === "Acquired" || f === "IPO") show = status === f;
+          else show = cats.includes(f);
+          row.style.display = show ? "" : "none";
+        });
+      });
+    });
+  })();
+</script>

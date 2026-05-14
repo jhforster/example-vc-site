@@ -1,0 +1,51 @@
+---
+import { team } from "../data/team";
+
+function gradient(seed: string) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) % 360;
+  return `linear-gradient(135deg, hsl(${h} 20% 88%), hsl(${(h + 60) % 360} 18% 78%))`;
+}
+---
+
+<section id="team" class="py-24 lg:py-32 border-b border-[color:var(--color-line)]">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] mb-3">Team</p>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Operators and investors,<br />in equal measure.</h2>
+      </div>
+      <p class="max-w-md text-[color:var(--color-muted)]">
+        A senior team of former founders, operators, and technologists. We split
+        coverage across AI, infrastructure, fintech, health, and consumer.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+      {team.map((m) => (
+        <a href="#" class="group block">
+          <div
+            class="aspect-square w-full rounded-sm overflow-hidden flex items-center justify-center text-2xl font-medium tracking-tight text-[color:var(--color-ink)]/40"
+            style={`background: ${gradient(m.name)}`}
+          >
+            {m.initials}
+          </div>
+          <div class="mt-4">
+            <div class="text-base font-medium tracking-tight">{m.name}</div>
+            <div class="text-sm text-[color:var(--color-muted)]">{m.role}</div>
+            {m.focus.length > 0 && (
+              <div class="mt-2 text-xs text-[color:var(--color-muted)]">
+                {m.focus.join(" · ")}
+              </div>
+            )}
+            {m.companies.length > 0 && (
+              <div class="mt-1 text-xs text-[color:var(--color-ink)]/70">
+                {m.companies.join(", ")}
+              </div>
+            )}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
